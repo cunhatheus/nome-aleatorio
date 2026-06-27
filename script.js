@@ -19,9 +19,12 @@ function randomName() {
     }
     return name
 }
-// initialize button
+// initialize buttons
 let nameButton = document.querySelector("#nameButton");
-nameButton.onclick = randomName;
+let nameBox = document.querySelector("#nameBox")
+nameButton.addEventListener("click", function () {
+    nameBox.textContent = randomName();
+});
 
 
 
