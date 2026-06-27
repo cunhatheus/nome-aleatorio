@@ -29,6 +29,7 @@ function randomName() {
     let afterConsonants = ['a', 'e', 'i', 'o', 'u', 'y', 'r', 'w', 'l'];
     let beforeH = ['l', 'n', 'p', 'c', 'k', 't']
     let badEnding = ['b', 'c', 'd', 'f', 'j', 'p', 'q', 't', 'v'];
+    let needVocal = ['l', 'm', 'n', 'r', 's', 'w', 'x'];
     let length = Math.floor(Math.random() * (11 - 4) + 4);
     let last;
     let beforeLast;
@@ -50,7 +51,12 @@ function randomName() {
     updateLast();
     while (name.length < length) {
         let newLetter = generateA();
-        if (last === 'h') {
+        updateLast();
+        if (name.length === 1 && needVocal.includes(last)) {
+            name += generateVowel();
+            updateLast();
+        }
+        else if (last === 'h') {
             name += generateVowel();
             updateLast();
         }
