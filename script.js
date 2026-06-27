@@ -28,10 +28,11 @@ function randomName() {
     let vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
     let afterConsonants = ['a', 'e', 'i', 'o', 'u', 'y', 'r', 'w', 'l'];
     let beforeH = ['l', 'n', 'p', 'c', 'k', 't']
-    let badEnding = ['b', 'c', 'd', 'f', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z'];
+    let badEnding = ['b', 'c', 'd', 'f', 'j', 'p', 'q', 't', 'v'];
     let length = Math.floor(Math.random() * (11 - 4) + 4);
     let last;
     let beforeLast;
+    let grandpaLast;
     function generateA() {
         let letter = alphabet[Math.floor(Math.random() * 26)];
         return letter;
@@ -43,6 +44,7 @@ function randomName() {
     function updateLast() {
         last = name[name.length - 1];
         beforeLast = name[name.length - 2];
+        grandpaLast = name[name.length - 3];
     }
     let name = generateA();
     updateLast();
@@ -52,11 +54,16 @@ function randomName() {
             name += generateVowel();
             updateLast();
         }
-        if (consonants.includes(last) && consonants.includes(beforeLast)) {
+        else if (last === 'q') {
+            let restrictedvowels = ['a', 'e', 'i', 'o', 'y'];
+            name += 'u' + restrictedvowels[Math.floor(Math.random() * 5)];
+            updateLast();
+        }
+        else if (consonants.includes(last) && consonants.includes(beforeLast)) {
             name += generateVowel();
             updateLast();
         }
-        if (consonants.includes(last) && afterConsonants.includes(newLetter) && newLetter !== last && newLetter !== 'h') {
+        else if (consonants.includes(last) && afterConsonants.includes(newLetter) && newLetter !== last && newLetter !== 'h') {
             name += newLetter;
             updateLast();
             console.log(last)
@@ -72,6 +79,10 @@ function randomName() {
     }
     if (consonants.includes(last) && consonants.includes(beforeLast)) {
             name += generateVowel();
+            updateLast();
+    }
+    else if (badEnding.includes(last) && (!vowels.includes(beforeLast) || !vowels.includes(grandpaLast))) {
+        name += generateVowel();
     }
     return name;
 }
