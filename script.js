@@ -31,13 +31,14 @@ function randomName() {
     let badEnding = ['b', 'c', 'd', 'f', 'j', 'p', 'q', 't', 'v'];
     let needVocal1 = ['l', 'm', 'n', 'r', 's', 'w', 'x'];
     let afterM = ['a', 'e', 'i', 'o', 'u', 'y', 'p', 'b', 'p', 'b']
-    let restrictedvowels = ['a', 'e', 'i', 'o', 'y'];
+    let restrictedvowels = ['a', 'e', 'i', 'o', 'y', 'i', 'i', 'e', 'e'];
     let notBeforeW = ['c', 'h', 'm', 'n', 'r', 'u', 'v', 'w', 'x', 'y'];
     let vowelsPlusW = ['a', 'e', 'i', 'o', 'u', 'y', 'w'];
     let vowelsAfterJ = ['a', 'o', 'u']
     let last;
     let beforeLast;
     let grandpaLast;
+    let excludedLetters = getExcludedLetters();
     let length = Math.floor(Math.random() * (11 - 4) + 4);
     function generate(array){
         let letter = array[Math.floor(Math.random() * array.length)];
@@ -51,11 +52,17 @@ function randomName() {
     let name = generate(alphabet);
     updateLast();
     while (name.length < length) {
-        console.log(last)
         let newLetter = generate(alphabet);
         if (newLetter === 'w'  && notBeforeW.includes(last)) {
             while (newLetter === 'w') {
                 newLetter = generate(alphabet);
+            }
+        }
+        if (newLetter === 'q' && name.length >= length - 2) {
+            while (newLetter === 'q') {
+                newLetter = generate(alphabet);
+                console.log('rejected q');
+                console.log(last);
             }
         }
         if (last === 'j' && ['i', 'e', 'r'].includes(newLetter)) {
@@ -112,6 +119,8 @@ function randomName() {
     else if (badEnding.includes(last) && (!vowels.includes(beforeLast) || !vowels.includes(grandpaLast))) {
         name += generate(vowels);
     }
+    console.log("target " + length)
+    console.log("length " + name.length)
     return name;
 }
 // set up buttons
@@ -127,10 +136,20 @@ nameButton.addEventListener("click", function () {
     nameButtonText.textContent = "Tente de novo"
 });
 
+function getExcludedLetters() {
+    let lettersToExclude = [];
+    if (!k.checked) lettersToExclude.push('k');
+    if (!w.checked) lettersToExclude.push('w');
+    if (!y.checked) lettersToExclude.push('y');
+    return lettersToExclude;
+}
+
+
+
+
 
 let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-//se allowed não está vendo depois de vogal, a próxima tem que ser vogal
-
+//não permitir 'q' nos ultimos 2 indexes
 /*function generateConsonant() {
         let letter = consonants[Math.floor(Math.random() * 20)];
         return letter;

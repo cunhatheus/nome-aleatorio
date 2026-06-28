@@ -45,7 +45,6 @@ body {
     cursor: pointer;
 }
 .options {
-    display: none;
     color: #6a6d70;
 }
 .box input {
