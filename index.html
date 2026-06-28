@@ -9,12 +9,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bpmf+Iansui&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="mainContainer">
-        <button id="nameButton"> <span>🎲</span><span>Nome aleatório</span></button>
-        <div id="nameBox"></div>
+        <button id="nameButton"> <span>🎲</span><span id="nameButtonText">Nome aleatório</span></button>
+        <div id="nameBox"> </div>
+        <div class="options">
+            <span>Incluir</span>
+            <div class="boxFlex">
+            <label class="box">
+            <input id="k" type="checkbox" checked>k
+            </label>
+            <label class="box">
+            <input id="y" type="checkbox" checked>y
+            </label>
+            <label class="box">
+            <input id="w" type="checkbox" checked>w
+            </label>
+            </div>
+        </div>
+        
+       
     </div>
     <script src="script.js"></script>
 </body>

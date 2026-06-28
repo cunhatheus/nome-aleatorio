@@ -29,17 +29,18 @@ function randomName() {
     let afterConsonants = ['a', 'e', 'i', 'o', 'u', 'y', 'r', 'w', 'l'];
     let beforeH = ['l', 'n', 'p', 'c', 'k', 't']
     let badEnding = ['b', 'c', 'd', 'f', 'j', 'p', 'q', 't', 'v'];
-    let needVocal = ['l', 'm', 'n', 'r', 's', 'w', 'x'];
-    let length = Math.floor(Math.random() * (11 - 4) + 4);
+    let needVocal1 = ['l', 'm', 'n', 'r', 's', 'w', 'x'];
+    let afterM = ['a', 'e', 'i', 'o', 'u', 'y', 'p', 'b', 'p', 'b']
+    let restrictedvowels = ['a', 'e', 'i', 'o', 'y'];
+    let notBeforeW = ['c', 'h', 'm', 'n', 'r', 'u', 'v', 'w', 'x', 'y'];
+    let vowelsPlusW = ['a', 'e', 'i', 'o', 'u', 'y', 'w'];
+    let vowelsAfterJ = ['a', 'o', 'u']
     let last;
     let beforeLast;
     let grandpaLast;
-    function generateA() {
-        let letter = alphabet[Math.floor(Math.random() * 26)];
-        return letter;
-    }
-    function generateVowel() {
-        let letter = vowels[Math.floor(Math.random() * 6)];
+    let length = Math.floor(Math.random() * (11 - 4) + 4);
+    function generate(array){
+        let letter = array[Math.floor(Math.random() * array.length)];
         return letter;
     }
     function updateLast() {
@@ -47,32 +48,53 @@ function randomName() {
         beforeLast = name[name.length - 2];
         grandpaLast = name[name.length - 3];
     }
-    let name = generateA();
+    let name = generate(alphabet);
     updateLast();
     while (name.length < length) {
-        let newLetter = generateA();
-        updateLast();
-        if (name.length === 1 && needVocal.includes(last)) {
-            name += generateVowel();
+        console.log(last)
+        let newLetter = generate(alphabet);
+        if (newLetter === 'w'  && notBeforeW.includes(last)) {
+            while (newLetter === 'w') {
+                newLetter = generate(alphabet);
+            }
+        }
+        if (last === 'j' && ['i', 'e', 'r'].includes(newLetter)) {
+            newLetter = generate(vowelsAfterJ);
+        }
+        if (vowelsPlusW.includes(newLetter) && vowelsPlusW.includes(last) && vowelsPlusW.includes(beforeLast) && vowelsPlusW.includes(grandpaLast)) {
+            while (vowelsPlusW.includes(newLetter)) {
+                newLetter = generate(consonants);
+            } 
+        }
+        if (name.length === 1 && needVocal1.includes(last)) {
+            name += generate(vowels);
             updateLast();
         }
+        else if (last === 'm') {
+            if (name.length === 1) {
+                name += generate(vowels);
+                updateLast();
+            }
+            else {
+                name += generate(afterM);
+                updateLast();
+            }
+        }
         else if (last === 'h') {
-            name += generateVowel();
+            name += generate(vowels);
             updateLast();
         }
         else if (last === 'q') {
-            let restrictedvowels = ['a', 'e', 'i', 'o', 'y'];
-            name += 'u' + restrictedvowels[Math.floor(Math.random() * 5)];
+            name += 'u' + generate(restrictedvowels);
             updateLast();
         }
         else if (consonants.includes(last) && consonants.includes(beforeLast)) {
-            name += generateVowel();
+            name += generate(vowels);
             updateLast();
         }
         else if (consonants.includes(last) && afterConsonants.includes(newLetter) && newLetter !== last && newLetter !== 'h') {
             name += newLetter;
             updateLast();
-            console.log(last)
         }
         else if (vowels.includes(last) && newLetter !== last && newLetter !== 'h') {
             name += newLetter;
@@ -84,23 +106,29 @@ function randomName() {
         }    
     }
     if (consonants.includes(last) && consonants.includes(beforeLast)) {
-            name += generateVowel();
+            name += generate(vowels);
             updateLast();
     }
     else if (badEnding.includes(last) && (!vowels.includes(beforeLast) || !vowels.includes(grandpaLast))) {
-        name += generateVowel();
+        name += generate(vowels);
     }
     return name;
 }
-// initialize buttons
+// set up buttons
 let nameButton = document.querySelector("#nameButton");
-let nameBox = document.querySelector("#nameBox")
+let nameBox = document.querySelector("#nameBox");
+let nameButtonText = document.querySelector("#nameButtonText");
+let k = document.querySelector("#k");
+let w = document.querySelector("#w");
+let y = document.querySelector("#y");
+
 nameButton.addEventListener("click", function () {
     nameBox.textContent = randomName();
+    nameButtonText.textContent = "Tente de novo"
 });
 
 
-//['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 //se allowed não está vendo depois de vogal, a próxima tem que ser vogal
 
 /*function generateConsonant() {
