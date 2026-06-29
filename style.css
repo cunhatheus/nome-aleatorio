@@ -22,6 +22,8 @@ body {
     font-size: 2.5rem;
     text-transform: capitalize;
     font-family: "Google Sans Flex", sans-serif;
+    min-height: 50px;
+    min-width: 300px;
 }
 
 #nameButton {
@@ -68,4 +70,16 @@ body {
 .boxFlex {
     display: flex;
     gap: 1rem;
+}
+#abrasileirar {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    background: #494c4e;
+    color: rgb(227, 227, 227);
+    border-radius: 10px;
+    padding: 4px 12px;
+    font-weight: 700;
+    display: block;
 }

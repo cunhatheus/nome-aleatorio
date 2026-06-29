@@ -13,8 +13,8 @@
 </head>
 <body>
     <div class="mainContainer">
-        <button id="nameButton"> <span>🎲</span><span id="nameButtonText">Nome aleatório</span></button>
         <div id="nameBox"> </div>
+        <button id="nameButton"> <span>🎲</span><span id="nameButtonText">Nome aleatório</span></button>
         <div class="options">
             <span>Incluir</span>
             <div class="boxFlex">
@@ -27,9 +27,34 @@
             <label class="box">
             <input id="w" type="checkbox" checked>w
             </label>
+            <label class="box">
+            <input id="h" type="checkbox" checked>h
+            </label>
+            <label class="box">
+            <input id="x" type="checkbox" checked>x
+            </label>
+            <label class="box">
+            <input id="z" type="checkbox" checked>z
+            </label>
             </div>
         </div>
-        
+        <div class="options">
+            <span>Abrasileirar</span>
+        <div class="boxFlex">
+            <label class="box">
+            <input type="radio" name="abrasileirar" value="2">
+            x0
+            </label>
+            <label class="box">
+            <input type="radio" name="abrasileirar" value="1" checked>
+            x1
+            </label>
+            <label class="box">
+            <input type="radio" name="abrasileirar" value="0">
+            x2
+            </label>
+        </div>
+        </div>
        
     </div>
     <script src="script.js"></script>

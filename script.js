@@ -11,6 +11,8 @@ function randomName() {
     let afterM = ['a', 'e', 'i', 'o', 'u', 'y', 'p', 'b', 'p', 'b'];    
     let vowelsAfterJ = ['a', 'o', 'u'];
     let restrictedvowels = ['a', 'e', 'i', 'o', 'y', 'i', 'i', 'e', 'e'];
+    let afterVowels = ['l', 'm', 'n', 'r', 's']
+    let hardConsonantsPlusS = ['b', 'c', 'd', 'f', 'g', 'k', 'p', 'q', 's', 't', 'v', 'x', 'z'];
     
     //arrays used for comparing
     let afterConsonants = ['a', 'e', 'i', 'o', 'u', 'y', 'r', 'w', 'l'];
@@ -24,6 +26,9 @@ function randomName() {
     let beforeLast;
     let grandpaLast;
     let length = Math.floor(Math.random() * (11 - 4) + 4);
+    let abrasileirar = Number(document.querySelector('input[name="abrasileirar"]:checked').value);
+    console.log('abrasileirar ' + abrasileirar);
+
     function generate(array){
         let letter = array[Math.floor(Math.random() * array.length)];
         return letter;
@@ -33,14 +38,60 @@ function randomName() {
         beforeLast = name[name.length - 2];
         grandpaLast = name[name.length - 3];
     }
+    function diceRoll() {
+    console.log('rolling dice')    
+    let roll = Math.floor(Math.random() * 3);
+    if (roll > abrasileirar) return true;
+    else return false;
+}
 
-    [alphabet, consonants, vowels, afterM, vowelsAfterJ, restrictedvowels] =
-    [alphabet, consonants, vowels, afterM, vowelsAfterJ, restrictedvowels].map(updateArray)    
+    [alphabet, consonants, vowels, afterM, vowelsAfterJ, restrictedvowels, hardConsonantsPlusS] =
+    [alphabet, consonants, vowels, afterM, vowelsAfterJ, restrictedvowels, hardConsonantsPlusS].map(updateArray)    
     
     let name = generate(alphabet);
     updateLast();
     while (name.length < length) {
+
+        console.log('name ' + name);
+        console.log('length ' + name.length + '/' + length);
+        
         let newLetter = generate(alphabet);
+
+        //chance to update name if last is vowel
+        if (vowels.includes(last) && diceRoll()) {
+            name += generate(afterVowels);
+            console.log('rolled true');
+            updateLast();
+            if (last === 'm' && name.length < length - 2) {
+                name += generate(afterM);
+                console.log('afterM+afterVoewls');
+                updateLast();
+            }
+            else if (last === 'l' && name.length < length - 2) {
+                name += generate(hardConsonantsPlusS);
+                updateLast();
+            }
+            else if (last === 'n' && name.length < length - 2) {
+                let aConsonant = generate(consonants);
+                if (aConsonant !== last && !['m', 'b', 'p'].includes(aConsonant)) name += aConsonant;
+                updateLast();
+            }
+            else if (name.length < length - 2) {
+                let aConsonant = generate(consonants);
+                if ((aConsonant !== last && aConsonant !== 'h') || ['r', 's'].includes(aConsonant)) name += aConsonant;
+                updateLast();
+            }
+            else if (name.length === length) return name;
+        }
+
+        //chance of updating newLetter if last is consonant
+        /*
+        if (consonants.includes(last) && diceRoll()) {
+            newLetter = generate(vowels)
+            console.log('rolled true with consonant')
+            console.log('new letter = ' + newLetter)
+        }
+        */
         if (newLetter === 'w'  && notBeforeW.includes(last)) {
             while (newLetter === 'w') {
                 newLetter = generate(alphabet);
@@ -50,7 +101,6 @@ function randomName() {
             while (newLetter === 'q') {
                 newLetter = generate(alphabet);
                 console.log('rejected q');
-                console.log(last);
             }
         }
         if (last === 'j' && ['i', 'e', 'r'].includes(newLetter)) {
@@ -70,8 +120,12 @@ function randomName() {
                 name += generate(vowels);
                 updateLast();
             }
-            else {
+            else if (name.length < length - 1) {
                 name += generate(afterM);
+                updateLast();
+            }
+            else if (name.length === length - 1) {
+                name += generate(vowels);
                 updateLast();
             }
         }
@@ -105,7 +159,10 @@ function randomName() {
             updateLast();
     }
     else if (badEnding.includes(last) && (!vowels.includes(beforeLast) || !vowels.includes(grandpaLast))) {
-        name += generate(vowels);
+        if (last === 'j') {
+            name += generate(vowelsAfterJ)
+        }
+        else name += generate(vowels);
     }
     console.log("target " + length)
     console.log("length " + name.length)
@@ -118,6 +175,10 @@ let nameButtonText = document.querySelector("#nameButtonText");
 let k = document.querySelector("#k");
 let w = document.querySelector("#w");
 let y = document.querySelector("#y");
+let x = document.querySelector("#x");
+let z = document.querySelector("#z");
+let h = document.querySelector("#h");
+
 
 nameButton.addEventListener("click", function () {
     nameBox.textContent = randomName();
@@ -129,6 +190,9 @@ function updateArray(array) {
         if (!k.checked) excludedLetters.push('k');
         if (!w.checked) excludedLetters.push('w');
         if (!y.checked) excludedLetters.push('y');
+        if (!x.checked) excludedLetters.push('x');
+        if (!z.checked) excludedLetters.push('z');
+        if (!h.checked) excludedLetters.push('h');
         console.log('excluded ' + excludedLetters);
         if (excludedLetters.length > 0) {
             let tempArray = [];
@@ -187,3 +251,4 @@ function randomNameOld() {
 
 // testing
 let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
