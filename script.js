@@ -1,44 +1,28 @@
 
-/*function randomNameOld() {
-    
-    let alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-    let consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'];
-    let vowels = ['a', 'e', 'i', 'o', 'u'];
-    let allowed = ['h', 'l', 'r', 's','w', 'y'];
-    let length = Math.floor(Math.random() * (11 - 4) + 4);
-    let name = alphabet[Math.floor(Math.random() * 26)];
-    while (name.length < length) {
-        let letter = alphabet[Math.floor(Math.random() * 26)];
-        let i = name.length - 1;
-        if (consonants.includes(letter) && (!consonants.includes(name[i]) || allowed.includes(name[i]))) {
-            name += letter;
-        }
-        if (vowels.includes(letter) && letter !== name[i]) {
-            name += letter;
-        }
-    }
-    return name
-}*/
+
 
 
 function randomName() {
     
+    // arrays used to generate newLetter
     let alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
     let consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'z'];
     let vowels = ['a', 'e', 'i', 'o', 'u', 'y'];
+    let afterM = ['a', 'e', 'i', 'o', 'u', 'y', 'p', 'b', 'p', 'b'];    
+    let vowelsAfterJ = ['a', 'o', 'u'];
+    let restrictedvowels = ['a', 'e', 'i', 'o', 'y', 'i', 'i', 'e', 'e'];
+    
+    //arrays used for comparing
     let afterConsonants = ['a', 'e', 'i', 'o', 'u', 'y', 'r', 'w', 'l'];
     let beforeH = ['l', 'n', 'p', 'c', 'k', 't']
     let badEnding = ['b', 'c', 'd', 'f', 'j', 'p', 'q', 't', 'v'];
     let needVocal1 = ['l', 'm', 'n', 'r', 's', 'w', 'x'];
-    let afterM = ['a', 'e', 'i', 'o', 'u', 'y', 'p', 'b', 'p', 'b']
-    let restrictedvowels = ['a', 'e', 'i', 'o', 'y', 'i', 'i', 'e', 'e'];
     let notBeforeW = ['c', 'h', 'm', 'n', 'r', 'u', 'v', 'w', 'x', 'y'];
     let vowelsPlusW = ['a', 'e', 'i', 'o', 'u', 'y', 'w'];
-    let vowelsAfterJ = ['a', 'o', 'u']
+    
     let last;
     let beforeLast;
     let grandpaLast;
-    let excludedLetters = getExcludedLetters();
     let length = Math.floor(Math.random() * (11 - 4) + 4);
     function generate(array){
         let letter = array[Math.floor(Math.random() * array.length)];
@@ -49,6 +33,10 @@ function randomName() {
         beforeLast = name[name.length - 2];
         grandpaLast = name[name.length - 3];
     }
+
+    [alphabet, consonants, vowels, afterM, vowelsAfterJ, restrictedvowels] =
+    [alphabet, consonants, vowels, afterM, vowelsAfterJ, restrictedvowels].map(updateArray)    
+    
     let name = generate(alphabet);
     updateLast();
     while (name.length < length) {
@@ -136,6 +124,34 @@ nameButton.addEventListener("click", function () {
     nameButtonText.textContent = "Tente de novo"
 });
 
+function updateArray(array) {
+        let excludedLetters = [];
+        if (!k.checked) excludedLetters.push('k');
+        if (!w.checked) excludedLetters.push('w');
+        if (!y.checked) excludedLetters.push('y');
+        console.log('excluded ' + excludedLetters);
+        if (excludedLetters.length > 0) {
+            let tempArray = [];
+            for (let i = 0; i < array.length; i ++) {
+                let letter = array[i];
+                if (!excludedLetters.includes(letter)) {
+                    tempArray.push(letter)
+                }
+            }
+            array = tempArray;
+        }
+        return array;
+    }
+
+
+
+
+
+
+
+
+//code cemetery
+/*
 function getExcludedLetters() {
     let lettersToExclude = [];
     if (!k.checked) lettersToExclude.push('k');
@@ -144,56 +160,30 @@ function getExcludedLetters() {
     return lettersToExclude;
 }
 
-
-
-
-
-let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-//não permitir 'q' nos ultimos 2 indexes
-/*function generateConsonant() {
-        let letter = consonants[Math.floor(Math.random() * 20)];
-        return letter;
-    }
-    function generateAfterConsonant() {
-        let letter = afterConsonants[Math.floor(Math.random() * 9)];
-        return letter;
-    }
-        
+function randomNameOld() {
     
-    
-    let name = generateA();
-    updateLast();
+    let alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+    let consonants = ['b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z'];
+    let vowels = ['a', 'e', 'i', 'o', 'u'];
+    let allowed = ['h', 'l', 'r', 's','w', 'y'];
+    let length = Math.floor(Math.random() * (11 - 4) + 4);
+    let name = alphabet[Math.floor(Math.random() * 26)];
     while (name.length < length) {
-        if (consonants.includes(last) && consonants.includes(beforeLast)) {
-            name += generateVowel();
-            updateLast();
+        let letter = alphabet[Math.floor(Math.random() * 26)];
+        let i = name.length - 1;
+        if (consonants.includes(letter) && (!consonants.includes(name[i]) || allowed.includes(name[i]))) {
+            name += letter;
         }
-        if (last === 'h') {
-            name += generateVowel();
-            updateLast();
-        };
-        let newLetter = generateA();
-        if (newLetter !== last && newLetter !== 'h') {
-            if (consonants.includes(last) && afterConsonants.includes(newLetter)) {
-                name += newLetter;
-                updateLast();
-                console.log(last)
-            };
-            if (vowels.includes(last)) {
-                name += newLetter;
-                updateLast();
-                updateLast();
-            }}
-        if (newLetter === 'h' && beforeH.includes(last)) {
-                name += newLetter;
-                updateLast();            
-        };    
-    };
-    return name;
+        if (vowels.includes(letter) && letter !== name[i]) {
+            name += letter;
+        }
+    }
+    return name
+}
+
+*/
     
-    
-    
-    
-    */
 
 
+// testing
+let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
