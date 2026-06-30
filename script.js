@@ -252,3 +252,28 @@ function randomNameOld() {
 // testing
 let letras = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
 
+
+const minInput = document.querySelector('input[name="minLength"]');
+const minDecrease = document.getElementById('min-decrease');
+const minIncrease = document.getElementById('min-increase');
+
+minDecrease.addEventListener('click', () => {
+  const min = Number(minInput.min);
+  minInput.value = Math.max(min, Number(minInput.value) - 1);
+});
+
+minIncrease.addEventListener('click', () => {
+  const max = Number(minInput.max);
+  minInput.value = Math.min(max, Number(minInput.value) + 1);
+});
+
+const maxInput = document.querySelector('input[name="maxLength"]');
+const maxDecrease = document.getElementById('max-decrease');
+const maxIncrease = document.getElementById('max-increase');
+
+maxDecrease.addEventListener('click', () => {
+  maxInput.value = Math.max(Number(maxInput.min), Number(maxInput.value) - 1);
+});
+maxIncrease.addEventListener('click', () => {
+  maxInput.value = Math.min(Number(maxInput.max), Number(maxInput.value) + 1);
+});

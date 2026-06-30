@@ -57,14 +57,22 @@
         <div class="options">
             <span>Tamanho do nome</span>
                 <div class="boxFlex">
-                    <label>
-                    Min
-                    <input type="number" name="minLength" min="4" max="15" value="4">
-                    </label>
-                    <label>
-                    Max 
-                    <input type="number" name="maxLength" min="5" max="16" value="10">
-                    </label>
+                    <div>
+                        <span>min</span>
+                        <button type="button" id="min-decrease">-</button>
+                        <label>
+                        <input type="number" name="minLength" min="4" max="15" value="4">
+                        </label>
+                        <button type="button" id="min-increase">+</button>
+                    </div>
+                    <div>
+                        <span>máx</span>
+                        <button type="button" id="max-decrease">-</button>
+                        <label>
+                        <input type="number" name="maxLength" min="5" max="16" value="10">
+                        </label>
+                        <button type="button" id="max-increase">+</button>
+                    </div>
                 </div>
             </div>
         </div>
