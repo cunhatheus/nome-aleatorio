@@ -8,8 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@6..144,1..1000&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bpmf+Iansui&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="mainContainer">
@@ -55,7 +54,20 @@
             </label>
         </div>
         </div>
-       
+        <div class="options">
+            <span>Tamanho do nome</span>
+                <div class="boxFlex">
+                    <label>
+                    Min
+                    <input type="number" name="minLength" min="3" max="10" value="4">
+                    </label>
+                    <label>
+                    Max 
+                    <input type="number" name="maxLength" min="4" max="12" value="8">
+                    </label>
+                </div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
